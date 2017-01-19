@@ -19,9 +19,9 @@
 	<form id="form2" action="http://127.0.0.1:5000/Add" method="post">
 		<label>Name:</label> <input name="name" type="text" id="name">
 		<label>Surname:</label> <input name="surname" type="text" id="surname">
-		<label>Surname:</label> <input name="surname" type="text" id="surname">
 		<label>Id:</label> <input name="Id" type="text" id="Id">
 		<label>Patologia:</label> <input name="patologia" type="text" id="patologia">
+		<input type="hidden" value=(:Cod:) name="codmed">
 		<button type="submit">Insert</button><br>
 	</form><br><br>
 
@@ -38,6 +38,7 @@
 
 	<form id="form4" action="http://127.0.0.1:5000/Delete" method="post">
 		<label>Id Paziente:</label> <input name="idp" type="text" id="idp">
+		<input type="hidden" value=(:Cod:) name="codmedi" />
 		<button type="submit">Delete</button><br>
 	</form>
 	

@@ -59,6 +59,16 @@ var getNome = function getNome(ID){
 	return "null";
 }
 
+var getCod = function getCod(ID){
+
+	for(i=0; i<medici.length; i++){
+		if(ID == medici[i].ID){
+			return medici[i].ID;
+		}
+	}
+	return "null";
+}
+
 var searchPatience = function searchPatience(name,surname){
 
 	for(i=0;i<pazienti.length;i++){
@@ -72,6 +82,54 @@ var searchPatience = function searchPatience(name,surname){
 }
 
 
+var addPatience = function addPatience(name,surname,idp,cmedi,pat){
+
+ if(searchPatience(name,surname) == null){
+
+    var paziente = {
+    	nome: name,
+    	cognome: surname,
+        id: idp,
+        cmed: cmedi,
+        patologia: pat,
+        prescrizioni : []
+    };
+
+    pazienti.push(paziente);
+    return true;}else{
+
+    	return false;
+    }
+
+}
+
+var removePatience = function removePatience(idp,cod){
+
+	var position = null;
+	
+    //search for the position
+    for (i=0; i < pazienti.length; i++)
+	{
+            if (pazienti[i].id == idp && pazienti[i].cmed == cod)
+                {
+					position = i;
+                }
+        }
+	
+    //if is not found return null
+	if (position == null)
+    	return false;
+	else
+	{
+		pazienti.splice(position,1);
+		return true;
+	}
+}
+
+
 exports.Autenticate = Autenticate;
 exports.getNome = getNome;
+exports.getCod = getCod;
 exports.searchPatience = searchPatience;
+exports.addPatience = addPatience;
+exports.removePatience = removePatience;
