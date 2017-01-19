@@ -31,6 +31,7 @@
 		<label>Id Paziente:</label> <input name="idp" type="text" id="idp">
 		<label>Nome medicinale:</label> <input name="medicinale" type="text" id="medicinale">
 		<label>Informazioni:</label> <input name="informazioni" type="text" id="informazioni">
+		<input type="hidden" value=(:Cod:) name="codmedico" />
 		<button type="submit">Add</button><br>
 	</form><br><br>
 

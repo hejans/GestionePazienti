@@ -275,7 +275,6 @@ app.post('/Delete', function(request,response)
 	
 	var codice;
 	var codicemedico;
- console.log(request.body);
 
 if ( typeof request.body !== 'undefined' && request.body)
 	{
@@ -318,6 +317,95 @@ if(dataManager.removePatience(codice,codicemedico) != null){
         response.end(data);
 
 	});
+
+
+}else{
+
+	 response.writeHead(400, {'Content-Type': 'text/html'});
+     response.end("Error Wrong Combination");
+}
+}else{
+	response.writeHead(406, {'Content-Type': 'text/html'});
+     response.end("Bad request");
+}
+
+
+});
+
+app.post('/Prescription', function(request,response)
+{
+	var headers = {};
+	headers["Access-Control-Allow-Origin"] = "*";
+	headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
+	headers["Access-Control-Allow-Credentials"] = false;
+	headers["Access-Control-Max-Age"] = '86400'; // 24 hours
+	headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept";
+	
+	var idpaz;
+	var medicina;
+	var descrizione;
+	var codmed;
+
+if ( typeof request.body !== 'undefined' && request.body)
+	{
+		if ( typeof request.body.idp !== 'undefined' && request.body.idp &&
+			 typeof request.body.codmedico != 'undefined' && request.body.codmedico &&
+			 typeof request.body.medicinale != 'undefined' && request.body.medicinale &&
+			 typeof request.body.informazioni != 'undefined' && request.body.informazioni)
+            {
+			 idpaz = request.body.idp;
+			 codmed = request.body.codmedico;
+			 medicina = request.body.medicinale;
+			 descrizione = request.body.informazioni;
+            }
+		else {
+			idpaz = 'not defined';
+			codmed = 'not defined';
+		    medicina = 'not defined';
+		    descrizione = 'not defined';}
+	
+	}
+	else
+	{
+		idpaz = 'body undefined';
+		codmed = 'body undefined';
+		medicina = 'body undefined';
+		descrizione = 'body undefined';
+	}
+
+	
+
+if(idpaz != 'not defined' && idpaz != 'body undefined' && codmed != 'not defined' && codmed != 'body undefined'
+	&& medicina != 'not defined'  && medicina != 'body undefined'){
+
+
+if(dataManager.addPrescription(idpaz,medicina,descrizione,codmed) != false){
+
+
+  var paziente = dataManager.searchPatienceID(idpaz);
+	var list = "";
+	for(i=0; i< paziente.prescrizioni.length; i++){
+        list = list + paziente.prescrizioni[i].nomef + " : " + paziente.prescrizioni[i].causa + ". ";
+	}
+
+
+  bind.toFile('tpl/schedaPaziente.tpl',{
+
+  	Name : paziente.nome,
+  	Surname : paziente.cognome,
+  	Id : paziente.id,
+  	Cod : paziente.cmed,
+  	Pat : paziente.patologia,
+  	Pres : list
+		
+	},function(data){
+
+		response.writeHead(200, {'Content-Type': 'text/html'});
+        response.end(data);
+
+	});
+
+
 
 
 }else{
